@@ -1,0 +1,122 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #ffffff;
+}
+
+.chatArea {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+  scroll-behavior: smooth;
+}
+
+.messageWrapper {
+  max-width: 48rem;
+  margin: 1rem auto;
+}
+
+.message {
+  padding: 1rem 1.5rem;
+  border-radius: 0.75rem;
+  line-height: 1.5;
+}
+
+.userMessage {
+  background-color: #f1f5f9;
+  margin-left: auto;
+  color: #1e293b;
+}
+
+.assistantMessage {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+}
+
+.inputArea {
+  border-top: 1px solid #e2e8f0;
+  padding: 1.5rem;
+  background-color: #ffffff;
+}
+
+.form {
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.inputWrapper {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.button {
+  padding: 0.75rem 1.5rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.button:hover {
+  background-color: #1d4ed8;
+}
+
+.button:active {
+  background-color: #1e40af;
+}
+
+.button:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.input:disabled {
+  background-color: #f1f5f9;
+  cursor: not-allowed;
+}
+
+.sources {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+  font-size: 0.875rem;
+}
+
+.sources h4 {
+  margin-bottom: 0.5rem;
+  color: #64748b;
+}
+
+.source {
+  margin-bottom: 0.25rem;
+}
+
+.source a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.source a:hover {
+  text-decoration: underline;
+} 

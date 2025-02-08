@@ -5,6 +5,8 @@ import styles from "./page.module.css";
 import { createClient } from '@supabase/supabase-js'
 import { useState, useEffect } from "react";
 
+// TEST CODE / BOILERPLATE CODE!!
+// see /perplexity
 
 // set up
 const supabaseUrl = 'https://zxrvcgocqiuorvpezzer.supabase.co'
@@ -12,10 +14,7 @@ const PUBLIC_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
 const supabase = createClient(supabaseUrl, PUBLIC_ANON_KEY)
 
 
-
-
-
-function AnimalDisplay() {
+function AnimalDisplay({ refreshTrigger }: { refreshTrigger?: number }) {
   // Define an interface for the animal structure
   interface Animal {
     id: number;
@@ -39,7 +38,7 @@ function AnimalDisplay() {
     }
 
     fetchAnimals()
-  }, [])
+  }, [refreshTrigger]) // Re-run when refreshTrigger changes
 
   return (
     <div>
@@ -86,6 +85,21 @@ function AnimalForm({ onSuccessHandler }: { onSuccessHandler: () => void }) {
   )
 }
 
+function Animals() {
+  const [refreshCounter, setRefreshCounter] = useState(0)
+
+  const handleFormSuccess = () => {
+    setRefreshCounter(prev => prev + 1)
+  }
+
+  return (
+    <div>
+      <AnimalDisplay refreshTrigger={refreshCounter} />
+      <AnimalForm onSuccessHandler={handleFormSuccess} />
+    </div>
+  )
+}
+
 export default function Home() {
   return (
     <div className={styles.page}>
@@ -105,9 +119,7 @@ export default function Home() {
           <li>Save and see your changes instantly.</li>
         </ol>
 
-        <AnimalForm onSuccessHandler={() => {}} />
-
-        <AnimalDisplay />
+        <Animals />
 
         <div className={styles.ctas}>
           <a
