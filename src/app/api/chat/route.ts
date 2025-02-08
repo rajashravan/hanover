@@ -56,7 +56,7 @@ export async function POST(request: Request) {
     // 3. Get response from OpenAI
     const completion = await openai.chat.completions.create({
       messages: [{ role: "user", content: prompt }],
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
     });
     console.log('completion', completion);
 
