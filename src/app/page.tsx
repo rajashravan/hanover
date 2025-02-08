@@ -1,5 +1,90 @@
+"use client";
+
 import Image from "next/image";
 import styles from "./page.module.css";
+import { createClient } from '@supabase/supabase-js'
+import { useState, useEffect } from "react";
+
+
+// set up
+const supabaseUrl = 'https://zxrvcgocqiuorvpezzer.supabase.co'
+const PUBLIC_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4cnZjZ29jcWl1b3J2cGV6emVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkwMzM2MTksImV4cCI6MjA1NDYwOTYxOX0.BTVPHNFKC4dlcUmKPQryfwCViaIgRT00Pu-D56vDlyM'
+const supabase = createClient(supabaseUrl, PUBLIC_ANON_KEY)
+
+
+
+
+
+function AnimalDisplay() {
+  // Define an interface for the animal structure
+  interface Animal {
+    id: number;
+    // add other fields that your animals have
+    species?: string;
+  }
+
+  const [animals, setAnimals] = useState<Animal[]>([])
+
+  useEffect(() => {
+    const fetchAnimals = async () => {
+      const { data, error } = await supabase
+      .from('animals')
+      .select()
+
+      if (error) {
+        console.error('Error fetching animals:', error)
+      } else {
+        setAnimals(data)
+      }
+    }
+
+    fetchAnimals()
+  }, [])
+
+  return (
+    <div>
+      <h1>Animals</h1>
+      <ul>
+        {animals.map((animal) => (
+          <h3 key={animal.id}>{animal.species}</h3>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function AnimalForm({ onSuccessHandler }: { onSuccessHandler: () => void }) {
+  const [species, setSpecies] = useState('')
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    const { error } = await supabase
+      .from('animals')
+      .insert([
+        { species: species }
+      ])
+
+    if (error) {
+      console.error('Error adding animal:', error)
+    } else {
+      setSpecies('') // Reset form
+      onSuccessHandler()
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={species}
+        onChange={(e) => setSpecies(e.target.value)}
+        placeholder="Enter species"
+      />
+      <button type="submit">Add Animal</button>
+    </form>
+  )
+}
 
 export default function Home() {
   return (
@@ -19,6 +104,10 @@ export default function Home() {
           </li>
           <li>Save and see your changes instantly.</li>
         </ol>
+
+        <AnimalForm onSuccessHandler={() => {}} />
+
+        <AnimalDisplay />
 
         <div className={styles.ctas}>
           <a
