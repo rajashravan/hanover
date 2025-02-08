@@ -73,6 +73,22 @@ export default function Perplexity() {
 
   return (
     <div className={styles.container}>
+      <div className={styles.header}>
+        <div className={styles.headerContent}>
+          <div className={styles.logo}>
+            <img 
+              src="https://pbs.twimg.com/profile_images/1884999016267595776/TEHQlcwt_400x400.png"
+              alt="Hanover Logo"
+              width="32"
+              height="32"
+            />
+          </div>
+          <div className={styles.headerText}>
+            <h1>Hanover AI Chat</h1>
+            <p>Ask anything and get AI-powered answers with reliable sources</p>
+          </div>
+        </div>
+      </div>
       <div className={styles.chatArea} ref={chatAreaRef}>
         {messages.map((message, index) => (
           <div key={index} className={styles.messageWrapper}>

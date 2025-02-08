@@ -19,6 +19,7 @@
   scroll-behavior: smooth;
   padding-bottom: calc(6rem + 100px);
   -webkit-overflow-scrolling: touch;
+  padding-top: 1rem;
 }
 
 .messageWrapper {
@@ -273,4 +274,66 @@
   justify-content: center;
   font-size: 12px;
   color: #64748b;
+}
+
+.header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.headerContent {
+  max-width: 48rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.logo img {
+  border-radius: 8px;
+  object-fit: cover;
+  width: 32px;
+  height: 32px;
+}
+
+.headerText {
+  flex: 1;
+}
+
+.headerText h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+.headerText p {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0.25rem 0 0 0;
+}
+
+/* Add responsive styles for the header */
+@media (max-width: 640px) {
+  .header {
+    padding: 0.75rem 1rem;
+  }
+
+  .headerText h1 {
+    font-size: 1.25rem;
+  }
+
+  .headerText p {
+    font-size: 0.75rem;
+  }
 } 
