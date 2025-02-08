@@ -76,4 +76,14 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
-} 
+}
+
+export const config = {
+  maxDuration: 60, // Maximum duration in seconds
+  api: {
+    responseLimit: false,
+    bodyParser: {
+      sizeLimit: '2mb',
+    },
+  },
+}; 
