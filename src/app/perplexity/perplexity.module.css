@@ -226,4 +226,51 @@
       margin-bottom: 1.5rem;
     }
   }
+}
+
+.typingIndicator {
+  display: flex;
+  gap: 6px;
+  padding: 12px;
+  margin: 1rem auto;
+  max-width: 48rem;
+}
+
+.typingDot {
+  width: 8px;
+  height: 8px;
+  background: #94a3b8;
+  border-radius: 50%;
+  animation: bounce 1.4s infinite;
+}
+
+.typingDot:nth-child(2) { animation-delay: 0.2s; }
+.typingDot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-4px); }
+}
+
+.messageContent {
+  white-space: pre-wrap;
+}
+
+.messageHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #64748b;
 } 
