@@ -40,9 +40,9 @@ export default function Perplexity() {
         body: JSON.stringify({ query }),
       });
 
-      const data = await response.json();
       console.log('response', response);
-      console.log(data);    
+      const data = await response.json();
+      console.log('data', data);
 
       if (!response.ok) throw new Error(data.error);
 
