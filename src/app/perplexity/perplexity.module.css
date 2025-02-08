@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
   background-color: #ffffff;
   position: fixed;
   top: 0;
@@ -16,12 +17,16 @@
   overflow-y: auto;
   padding: 2rem;
   scroll-behavior: smooth;
-  padding-bottom: calc(4rem + 80px);
+  padding-bottom: calc(6rem + 100px);
+  -webkit-overflow-scrolling: touch;
 }
 
 .messageWrapper {
   max-width: 48rem;
   margin: 1rem auto;
+  &:last-child {
+    margin-bottom: 2rem;
+  }
 }
 
 .message {
@@ -189,7 +194,7 @@
 @media (max-width: 640px) {
   .chatArea {
     padding: 1rem;
-    padding-bottom: calc(3rem + 80px);
+    padding-bottom: calc(5rem + 100px);
   }
 
   .inputArea {
@@ -213,5 +218,12 @@
   .sourceThumbnail {
     width: 32px;
     height: 32px;
+  }
+
+  .messageWrapper {
+    margin: 0.75rem auto;
+    &:last-child {
+      margin-bottom: 1.5rem;
+    }
   }
 } 
