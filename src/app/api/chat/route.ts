@@ -32,9 +32,12 @@ const serpApi = async (query: string) => {
 export async function POST(request: Request) {
   try {
     const { query } = await request.json();
+    console.log('query', query);
     
     // 1. Get search results from SerpAPI
     const { organic_results, image_results } = await serpApi(query);
+    console.log('organic_results', organic_results);
+    console.log('image_results', image_results);
     
     // 2. Create prompt with search results and images
     const prompt = `Question: ${query}\n\n` +
@@ -48,11 +51,14 @@ export async function POST(request: Request) {
       }\n\n` +
       `Please provide a comprehensive answer to the question, citing the sources where appropriate using [1], [2], etc. Include relevant images in your response if they help illustrate the answer.`;
 
+    console.log('prompt', prompt);
+
     // 3. Get response from OpenAI
     const completion = await openai.chat.completions.create({
       messages: [{ role: "user", content: prompt }],
       model: "gpt-4",
     });
+    console.log('completion', completion);
 
     return NextResponse.json({
       answer: completion.choices[0].message.content,
