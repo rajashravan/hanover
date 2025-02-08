@@ -7,41 +7,60 @@ const openai = new OpenAI({
 });
 
 const serpApi = async (query: string) => {
-  const results = await getJson({
+  // Get text results
+  const textResults = await getJson({
     q: query,
     api_key: process.env.SERP_API_KEY,
     engine: "google",
     num: 3
   });
   
-  return results.organic_results?.slice(0, 3) || [];
+  // Get image results
+  const imageResults = await getJson({
+    q: query,
+    api_key: process.env.SERP_API_KEY,
+    engine: "google_images",
+    num: 2
+  });
+  
+  return {
+    organic_results: textResults.organic_results?.slice(0, 3) || [],
+    image_results: imageResults.images_results?.slice(0, 2) || []
+  };
 };
 
 export async function POST(request: Request) {
   try {
     const { query } = await request.json();
-    console.log('query', query);
-
-    // 1. Get search results from SerpAPI
-    const searchResults = await serpApi(query);
-    console.log('searchResults', searchResults);
     
-    // 2. Create prompt with search results
-    const prompt = `Question: ${query}\n\nRelevant sources:\n${
-      searchResults.map((result: any, index: number) => 
-        `[${index + 1}] ${result.title}\n${result.snippet}\nURL: ${result.link}`
-      ).join('\n\n')
-    }\n\nPlease provide a comprehensive answer to the question, citing the sources where appropriate using [1], [2], etc.`;
+    // 1. Get search results from SerpAPI
+    const { organic_results, image_results } = await serpApi(query);
+    
+    // 2. Create prompt with search results and images
+    const prompt = `Question: ${query}\n\n` +
+      `Relevant sources:\n${
+        organic_results.map((result: any, index: number) => 
+          `[${index + 1}] ${result.title}\n${result.snippet}\nURL: ${result.link}`
+        ).join('\n\n')
+      }\n\n` +
+      `Related images:\n${
+        image_results.map((img: any) => img.original).join('\n')
+      }\n\n` +
+      `Please provide a comprehensive answer to the question, citing the sources where appropriate using [1], [2], etc. Include relevant images in your response if they help illustrate the answer.`;
 
     // 3. Get response from OpenAI
     const completion = await openai.chat.completions.create({
       messages: [{ role: "user", content: prompt }],
-      model: "gpt-4o-mini"
+      model: "gpt-4",
     });
 
     return NextResponse.json({
       answer: completion.choices[0].message.content,
-      sources: searchResults
+      sources: organic_results,
+      images: image_results.map((img: any) => ({
+        url: img.original,
+        alt: img.title || query
+      }))
     });
 
   } catch (error) {

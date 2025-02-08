@@ -10,6 +10,11 @@ interface Message {
     title: string;
     link: string;
     snippet: string;
+    thumbnail?: string;
+  }>;
+  images?: Array<{
+    url: string;
+    alt: string;
   }>;
 }
 
@@ -69,11 +74,35 @@ export default function Perplexity() {
                 : styles.assistantMessage
             }`}>
               <p>{message.content}</p>
+              
+              {/* Display images if present */}
+              {message.images && message.images.length > 0 && (
+                <div className={styles.imageGrid}>
+                  {message.images.map((image, idx) => (
+                    <div key={idx} className={styles.imageWrapper}>
+                      <img 
+                        src={image.url} 
+                        alt={image.alt}
+                        className={styles.image}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {/* Existing sources display */}
               {message.sources && (
                 <div className={styles.sources}>
                   <h4>Sources:</h4>
                   {message.sources.map((source, idx) => (
                     <div key={idx} className={styles.source}>
+                      {source.thumbnail && (
+                        <img 
+                          src={source.thumbnail} 
+                          alt={source.title}
+                          className={styles.sourceThumbnail}
+                        />
+                      )}
                       <a href={source.link} target="_blank" rel="noopener noreferrer">
                         [{idx + 1}] {source.title}
                       </a>
